@@ -1,0 +1,154 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.header-sekolah h2 {
+    color: #1e3c72;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.header-sekolah h3 {
+    color: #555;
+    font-size: 1.1rem;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.divider {
+    border: 0;
+    height: 2px;
+    background: #e0e0e0;
+    margin: 25px 0;
+}
+
+.info-text {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.info-text-ready {
+    color: #2e7d32;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+/* Grid Hitung Mundur */
+.countdown-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 10px auto 20px auto;
+    max-width: 400px;
+}
+
+.time-box {
+    background: #f4f6f9;
+    padding: 12px 5px;
+    border-radius: 8px;
+    border: 1px solid #e0e6ed;
+}
+
+.time-box span {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e3c72;
+}
+
+.time-box p {
+    font-size: 0.75rem;
+    color: #777;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* Form Input & Tombol */
+.hidden {
+    display: none !important;
+}
+
+#form-area form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #2a5298;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-submit:hover {
+    background: #1b5e20;
+}
+
+.footer {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+/* Optimasi Layar HP Kecil */
+@media (max-width: 400px) {
+    .time-box span {
+        font-size: 1.4rem;
+    }
+    .header-sekolah h2 {
+        font-size: 1.3rem;
+    }
+}
