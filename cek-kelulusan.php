@@ -3,7 +3,7 @@
 date_default_timezone_set("Asia/Makassar");
 
 $waktu_sekarang = time();
-$waktu_buka = strtotime("2026-05-28 10:00:00");
+$waktu_buka = strtotime("2026-06-05 10:00:00"); // Sesuaikan jadwal pengumuman asli
 
 // 2. Proteksi Waktu (Cegah akses ilegal sebelum waktunya)
 if ($waktu_sekarang < $waktu_buka) {
@@ -24,19 +24,32 @@ if (empty($nisn_input)) {
     exit;
 }
 
-// 4. Data Dummy Siswa (Bisa diganti atau dihubungkan ke Database nanti)
-$data_siswa = [
-    "1234567890" => ["nama" => "Achmad Januar", "status" => "LULUS", "keterangan" => "Selamat! Tetap rendah hati dan semangat melanjutkan pendidikan."],
-    "0987654321" => ["nama" => "Siti Aminah", "status" => "LULUS", "keterangan" => "Selamat! Pertahankan prestasimu di jenjang berikutnya."]
-];
-
-// 5. Pencarian Data
+// 4. Membaca Data dari File CSV secara Efisien
 $siswa_ditemukan = false;
 $hasil_pencarian = null;
+$nama_file_csv = "data-siswa.csv";
 
-if (array_key_exists($nisn_input, $data_siswa)) {
-    $siswa_ditemukan = true;
-    $hasil_pencarian = $data_siswa[$nisn_input];
+if (file_exists($nama_file_csv)) {
+    // Buka file CSV dengan mode read-only
+    if (($handle = fopen($nama_file_csv, "r")) !== FALSE) {
+        // Lewati baris pertama (header tabel: NISN, NAMA, STATUS, KETERANGAN)
+        fgetcsv($handle, 1000, ",");
+        
+        // Looping membaca baris demi baris sampai ketemu NISN yang cocok
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            // $data[0] = NISN, $data[1] = Nama, $data[2] = Status, $data[3] = Keterangan
+            if (trim($data[0]) === $nisn_input) {
+                $siswa_ditemukan = true;
+                $hasil_pencarian = [
+                    "nama" => $data[1],
+                    "status" => $data[2],
+                    "keterangan" => $data[3]
+                ];
+                break; // Hentikan pencarian jika sudah ketemu (Sangat efisien untuk server)
+            }
+        }
+        fclose($handle);
+    }
 }
 ?>
 
@@ -48,14 +61,7 @@ if (array_key_exists($nisn_input, $data_siswa)) {
     <title>Hasil Kelulusan</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* CSS tambahan khusus halaman hasil */
-        .status-box {
-            margin: 20px 0;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.4rem;
-        }
+        .status-box { margin: 20px 0; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 1.4rem; }
         .lulus { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
         .tidak-lulus { background-color: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
         .tidak-ditemukan { background-color: #fff3e0; color: #ef6c00; border: 1px solid #ffcc80; }
@@ -82,8 +88,8 @@ if (array_key_exists($nisn_input, $data_siswa)) {
                     <p><strong>Nama Siswa :</strong> <?php echo htmlspecialchars($hasil_pencarian['nama']); ?></p>
                 </div>
 
-                <?php if ($hasil_pencarian['status'] === "LULUS"): ?>
-                    <div class="status-box lulus">DNYATAKAN: LULUS</div>
+                <?php if (strtoupper($hasil_pencarian['status']) === "LULUS"): ?>
+                    <div class="status-box lulus">DINYATAKAN: LULUS</div>
                 <?php else: ?>
                     <div class="status-box tidak-lulus">DINYATAKAN: TIDAK LULUS</div>
                 <?php endif; ?>
@@ -95,7 +101,7 @@ if (array_key_exists($nisn_input, $data_siswa)) {
             <?php else: ?>
                 <div class="status-box tidak-ditemukan">DATA TIDAK DITEMUKAN</div>
                 <p style="color: #666; font-size: 0.95rem; margin-bottom: 25px;">
-                    Maaf, data dengan NISN <strong><?php echo htmlspecialchars($nisn_input); ?></strong> tidak terdaftar dalam sistem kami. Pastikan nomor yang Anda masukkan benar.
+                    Maaf, data dengan NISN <strong><?php echo htmlspecialchars($nisn_input); ?></strong> tidak terdaftar dalam sistem kami.
                 </p>
             <?php endif; ?>
 
