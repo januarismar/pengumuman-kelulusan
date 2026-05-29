@@ -1,6 +1,6 @@
 // Target waktu pengumuman (Format: YYYY-MM-DDTHH:mm:ss)
 // Menggunakan standar ISO dengan offset Waktu Indonesia Tengah (WITA = UTC+8) -> +08:00
-const targetWaktu = new Date("2026-05-29T15:55:00+08:00").getTime();
+const targetWaktu = new Date("2026-06-02T16:00:00+08:00").getTime();
 
 const hitungMundur = setInterval(function() {
     const sekarang = new Date().getTime();

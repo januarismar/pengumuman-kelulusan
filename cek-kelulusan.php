@@ -3,7 +3,7 @@
 date_default_timezone_set("Asia/Makassar");
 
 $waktu_sekarang = time();
-$waktu_buka = strtotime("2026-05-29 15:55:00"); // Sesuaikan jadwal pengumuman asli
+$waktu_buka = strtotime("2026-06-02 16:00:00"); // Sesuaikan jadwal pengumuman asli
 
 // 2. Proteksi Waktu (Cegah akses ilegal sebelum waktunya)
 if ($waktu_sekarang < $waktu_buka) {
