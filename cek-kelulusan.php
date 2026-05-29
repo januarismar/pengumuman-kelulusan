@@ -33,10 +33,10 @@ if (file_exists($nama_file_csv)) {
     // Buka file CSV dengan mode read-only
     if (($handle = fopen($nama_file_csv, "r")) !== FALSE) {
         // Lewati baris pertama (header tabel: NISN, NAMA, STATUS, KETERANGAN)
-        fgetcsv($handle, 1000, ",");
+        fgetcsv($handle, 1000, ";");
         
         // Looping membaca baris demi baris sampai ketemu NISN yang cocok
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
             // $data[0] = NISN, $data[1] = Nama, $data[2] = Status, $data[3] = Keterangan
             if (trim($data[0]) === $nisn_input) {
                 $siswa_ditemukan = true;
